@@ -5,6 +5,11 @@ The colors for the theme is inspired from Debian.
 This is WIP, maybe here you will find more information:
  https://github.com/MarlinFirmware/Marlin/issues/12096
 
+# Flashing
+
+See [FLASHING.md](FLASHING.md) for instructions on flashing the `DWIN_SET`
+display resources to a compatible DWIN DGUS touchscreen.
+
 # License
 
 In the resources folder you find Sources.txt, where all resources used

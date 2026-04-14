@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DGUS Display Mockup</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f6f8f7;
+      --ink: #16201d;
+      --muted: #60706a;
+      --line: #c8d3ce;
+      --panel: #ffffff;
+      --panel-soft: #e8efec;
+      --screen-shell: #1c1f1d;
+      --screen-edge: #050706;
+      --accent: #e23d28;
+      --accent-dark: #9c2017;
+      --teal: #137c72;
+      --yellow: #f1c84b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 350px;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .stage {
+      min-width: 0;
+      position: sticky;
+      top: 24px;
+      align-self: start;
+      display: grid;
+      align-content: start;
+      gap: 18px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--teal);
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.15;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .device {
+      width: min(100%, 960px);
+      margin: 10px auto 0;
+      padding: 34px 42px 40px;
+      border: 1px solid #080a09;
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, #242724 0%, #141716 100%);
+      box-shadow: 0 18px 48px rgba(17, 24, 22, 0.24);
+    }
+
+    .screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 480 / 272;
+      overflow: hidden;
+      border: 3px solid var(--screen-edge);
+      background: #000;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .screen img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+      background: #000;
+    }
+
+    .device-footer {
+      min-height: 28px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 14px;
+      color: #c5d1cc;
+      font-size: 0.8rem;
+    }
+
+    .brand {
+      min-width: 110px;
+      font-weight: 800;
+    }
+
+    .status-lights {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .light {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--line);
+    }
+
+    .light.red {
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(226, 61, 40, 0.7);
+    }
+
+    .light.yellow {
+      background: var(--yellow);
+    }
+
+    .controls {
+      width: min(100%, 960px);
+      min-height: 70px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr) 112px;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .nav-button,
+    .screen-button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .nav-button {
+      min-height: 56px;
+      font-weight: 800;
+    }
+
+    .nav-button:hover,
+    .screen-button:hover {
+      border-color: var(--teal);
+    }
+
+    .screen-label {
+      min-width: 0;
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .screen-label strong,
+    .screen-label span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .screen-label strong {
+      font-size: 1rem;
+    }
+
+    .screen-label span {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .sidebar {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .sidebar-header {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .sidebar-header h2 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+
+    .sidebar-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .screen-grid {
+      min-height: 0;
+      overflow: auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: start;
+      gap: 10px;
+      padding-right: 4px;
+    }
+
+    .screen-button {
+      min-width: 0;
+      display: grid;
+      gap: 7px;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .screen-button[aria-current="true"] {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(226, 61, 40, 0.16);
+    }
+
+    .screen-button img {
+      width: 100%;
+      aspect-ratio: 480 / 272;
+      object-fit: cover;
+      border: 1px solid var(--panel-soft);
+      background: #000;
+    }
+
+    .screen-button span {
+      min-height: 34px;
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.28;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 980px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .stage {
+        position: static;
+      }
+
+      .sidebar {
+        grid-template-rows: auto auto;
+      }
+
+      .screen-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow: visible;
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .app {
+        padding: 14px;
+      }
+
+      h1 {
+        font-size: 1.55rem;
+      }
+
+      .device {
+        padding: 18px 18px 24px;
+      }
+
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .screen-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 420px) {
+      .screen-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="stage" aria-label="Display preview">
+      <p class="eyebrow">Marlin DGUS</p>
+      <h1>480 x 272 touchscreen preview</h1>
+      <p class="intro">Pick any exported screen from the list, or use the previous and next buttons to walk through the flow.</p>
+
+      <div class="device" aria-label="Printer touchscreen frame">
+        <div class="screen">
+          <img id="screen-image" src="DWIN_SET/10.Main.bmp" alt="Main screen">
+        </div>
+        <div class="device-footer" aria-hidden="true">
+          <span class="brand">DWIN DGUS</span>
+          <span>480 x 272 TFT</span>
+          <span class="status-lights">
+            <span class="light red"></span>
+            <span class="light yellow"></span>
+          </span>
+        </div>
+      </div>
+
+      <div class="controls" aria-label="Screen controls">
+        <button class="nav-button" id="previous" type="button">Previous</button>
+        <div class="screen-label">
+          <strong id="screen-title">Main</strong>
+          <span id="screen-path">DWIN_SET/10.Main.bmp</span>
+        </div>
+        <button class="nav-button" id="next" type="button">Next</button>
+      </div>
+    </section>
+
+    <aside class="sidebar" aria-label="Screen list">
+      <div class="sidebar-header">
+        <h2>Screen List</h2>
+        <p>These are the exported bitmaps from the `DWIN_SET` folder.</p>
+      </div>
+      <div class="screen-grid" id="screen-grid"></div>
+    </aside>
+  </main>
+
+  <script>
+    const screens = [
+      ["0.BootScreen.bmp", "Boot Screen"],
+      ["10.Main.bmp", "Main"],
+      ["11.Main_selected.bmp", "Main Selected"],
+      ["20.Temperatures.bmp", "Temperatures"],
+      ["21.Temperatures_selected.bmp", "Temperatures Selected"],
+      ["30.PrinterStatus.bmp", "Printer Status"],
+      ["31.PrinterStatus_selected.bmp", "Printer Status Selected"],
+      ["32.PrinterStatus2.bmp", "Printer Status 2"],
+      ["33.PrinterStatus2_selected.bmp", "Printer Status 2 Selected"],
+      ["40.ManualMove.bmp", "Manual Move"],
+      ["41.ManualMove_selected.bmp", "Manual Move Selected"],
+      ["42.ManualExtrude.bmp", "Manual Extrude"],
+      ["43.ManualExtrude_selected.bmp", "Manual Extrude Selected"],
+      ["44.FanAndFeedrate.bmp", "Fan And Feedrate"],
+      ["45.FanAndFeedrate_Selected.bmp", "Fan And Feedrate Selected"],
+      ["46.SetFlowRates.bmp", "Set Flow Rates"],
+      ["47.SetFlowRates_selected.bmp", "Set Flow Rates Selected"],
+      ["50.SDCard.bmp", "SD Card"],
+      ["51.SDCard_selected.bmp", "SD Card Selected"],
+      ["52.SDPauseAbortContinue.bmp", "SD Pause Abort Continue"],
+      ["53.SDPauseAbortContinue_selected.bmp", "SD Pause Abort Continue Selected"],
+      ["240.Confirm.bmp", "Confirm"],
+      ["241.Confirm_selected.bmp", "Confirm Selected"],
+      ["250.Killscreen.bmp", "Kill Screen"],
+      ["252.Popup.bmp", "Popup"],
+      ["253.Popup_selected.bmp", "Popup Selected"]
+    ];
+
+    const grid = document.querySelector("#screen-grid");
+    const image = document.querySelector("#screen-image");
+    const title = document.querySelector("#screen-title");
+    const path = document.querySelector("#screen-path");
+    const previous = document.querySelector("#previous");
+    const next = document.querySelector("#next");
+    let current = 1;
+
+    function assetPath(file) {
+      return `DWIN_SET/${file}`;
+    }
+
+    function setScreen(index) {
+      current = (index + screens.length) % screens.length;
+      const [file, label] = screens[current];
+      const nextPath = assetPath(file);
+
+      image.src = nextPath;
+      image.alt = `${label} screen`;
+      title.textContent = label;
+      path.textContent = nextPath;
+
+      document.querySelectorAll(".screen-button").forEach((button, buttonIndex) => {
+        button.setAttribute("aria-current", String(buttonIndex === current));
+      });
+    }
+
+    screens.forEach(([file, label], index) => {
+      const button = document.createElement("button");
+      button.className = "screen-button";
+      button.type = "button";
+      button.setAttribute("aria-current", "false");
+      button.innerHTML = `
+        <img src="${assetPath(file)}" alt="">
+        <span>${label}</span>
+      `;
+      button.addEventListener("click", () => setScreen(index));
+      grid.appendChild(button);
+    });
+
+    previous.addEventListener("click", () => setScreen(current - 1));
+    next.addEventListener("click", () => setScreen(current + 1));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") setScreen(current - 1);
+      if (event.key === "ArrowRight") setScreen(current + 1);
+    });
+
+    setScreen(current);
+  </script>
+</body>
+</html>
