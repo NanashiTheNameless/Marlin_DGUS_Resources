@@ -22,4 +22,4 @@ Please make sure to only use FOSS compatible resources.
 # UI Design software
 
 The software used to design the UI is DGUS_Setup_v5.1 and can be found here.
-(https://www.ampdisplay.com/amp_support_downloads/DGUS_Setup_v5.1.exe.zip)
+(https://web.archive.org/web/20230620221219/https://ampdisplay.com/amp_support_downloads/DGUS_Setup_v5.1.exe.zip)
